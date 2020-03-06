@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  php:
+    image: ddd-code-sample/php74
+    container_name: ddd-code-sample-php74
+    build:
+      context: .docker/php-fpm/.
+    volumes:
+      - ./:/var/www/app

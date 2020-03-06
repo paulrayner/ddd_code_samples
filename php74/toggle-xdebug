@@ -1,0 +1,16 @@
+#!/bin/bash
+XDEBUG_FILENAME="/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+OPCACHE_FILENAME="/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini"
+
+if grep -q "^zend_extension=" $XDEBUG_FILENAME
+then
+  sed -i 's/^zend_extension=/;zend_extension=/' $XDEBUG_FILENAME
+  sed -i 's/^;zend_extension=/zend_extension=/' $OPCACHE_FILENAME
+  kill -USR2 1
+  echo "PHP Xdebug Disabled & OPcache Enabled!"
+else
+  sed -i 's/^;zend_extension=/zend_extension=/' $XDEBUG_FILENAME
+  sed -i 's/^zend_extension=/;zend_extension=/' $OPCACHE_FILENAME
+  kill -USR2 1
+  echo "PHP Xdebug Enabled & OPcache Disabled!"
+fi
